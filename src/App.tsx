@@ -2,10 +2,12 @@ import { useState, useEffect } from 'react';
 import { Title } from './components/Title';
 import { ParticleOrb } from './components/ParticleOrb';
 import { motion } from 'motion/react';
+import { Isaias } from './components/Isaias';
+import { Buttons } from './components/Buttons';
 
 // Componente para el prompt de terminal con efecto de escritura y cursor parpadeante
 const TerminalPrompt = () => {
-  const fullText = ' C:/Users/rv.rivera> whoami';
+  const fullText = ' C:/Users/rv.rivera> ¿Quien eres?';
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
@@ -129,7 +131,6 @@ export function App() {
         </nav>
       </motion.header>
 
-      {/* Hero Section de 2 Columnas (Estilo dy.ojeda) */}
       <div
         style={{
           width: '100%',
@@ -193,84 +194,12 @@ export function App() {
               margin: 0,
             }}
           >
-            Transformo ideas en realidades: Interpreto necesidades y construyo soluciones innovadoras y eficientes.
+            Transformo ideas en realidades: Interpreto necesidades y construyo soluciones.
             Mediante APIs, Arquitecturas limpias, patrones de diseño, optimización de bases de datos y aprendiendo continuamente.
           </motion.p>
 
-          {/* Botones de Acción */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '14px',
-              marginTop: '12px',
-              flexWrap: 'wrap',
-            }}
-          >
-            <a
-              href="#contacto"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                backgroundColor: '#0284c7',
-                color: '#ffffff',
-                padding: '12px 24px',
-                borderRadius: '9999px',
-                fontSize: '14px',
-                fontWeight: 600,
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                textDecoration: 'none',
-                boxShadow: '0 10px 25px -5px rgba(2, 132, 199, 0.45)',
-                transition: 'all 0.25s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#0369a1';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#0284c7';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-            >
-              Contáctame <span style={{ fontSize: '15px' }}>↗</span>
-            </a>
-
-            <a
-              href="#proyectos"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                border: '1px solid rgba(255, 255, 255, 0.14)',
-                color: '#e2e8f0',
-                padding: '12px 24px',
-                borderRadius: '9999px',
-                fontSize: '14px',
-                fontWeight: 500,
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                textDecoration: 'none',
-                backdropFilter: 'blur(10px)',
-                transition: 'all 0.25s ease',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.4)';
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.14)';
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-            >
-              Ver proyectos <span style={{ fontSize: '14px' }}>↓</span>
-            </a>
-          </motion.div>
+          {/* Componente de Botones de Acción */}
+          <Buttons />
         </div>
 
         {/* Columna Derecha: Orbe de Partículas 3D con Tu Retrato */}
@@ -289,7 +218,10 @@ export function App() {
           <ParticleOrb imageSrc="/avatar.png" size={500} />
         </motion.div>
       </div>
-    </main>
+
+      <Isaias />
+
+    </main> 
   );
 }
 

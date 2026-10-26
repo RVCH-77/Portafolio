@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
 
 :root {
   /* Paleta de Color: Azul Rey (Royal Blue) & Zafiro / Plata */
@@ -42,19 +42,21 @@
 }
 
 html, body, #root {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;     /* Crece con el contenido */
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;    /* Evita scroll horizontal no deseado */
+  overflow-y: auto;      /* Permite el scroll vertical natural */
+  scroll-behavior: smooth;
   background-color: var(--bg-dark);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
 }
 
 body {
   background: radial-gradient(circle at 50% 50%, #0c1633 0%, #040711 75%);
+ font-family: var(--font-sans); /* 👈 Vuelve a activar la fuente por defecto */
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Utilidades esenciales de Layout (Garantiza que funcionen sin Tailwind) */
