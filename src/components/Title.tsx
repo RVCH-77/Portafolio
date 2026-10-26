@@ -38,7 +38,7 @@ export const Title = () => {
       style={{
         display: "inline-flex",
         alignItems: "baseline",
-        fontSize: "clamp(48px, 6.8vw, 92px)",
+        fontSize: "clamp(34px, 7.5vw, 92px)",
         fontWeight: 900,
         letterSpacing: "-0.045em",
         fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif",

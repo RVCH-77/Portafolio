@@ -793,8 +793,8 @@ export const ParticleOrb: React.FC<ParticleOrbProps> = ({
       style={{
         position: 'relative',
         width: '100%',
-        maxWidth: '820px',
-        height: `${size}px`,
+        maxWidth: `${size}px`,
+        aspectRatio: '1 / 1',
         margin: '0 auto',
         display: 'flex',
         alignItems: 'center',
@@ -802,12 +802,14 @@ export const ParticleOrb: React.FC<ParticleOrbProps> = ({
         userSelect: 'none',
       }}
     >
-      {/* Resplandor ambiental de fondo */}
+      {/* Resplandor ambiental de fondo responsive */}
       <div
         style={{
           position: 'absolute',
-          width: '440px',
-          height: '440px',
+          width: '85%',
+          height: '85%',
+          maxWidth: '440px',
+          maxHeight: '440px',
           borderRadius: '50%',
           background: 'radial-gradient(circle, rgba(0, 216, 255, 0.22) 0%, rgba(37, 99, 235, 0.09) 45%, transparent 70%)',
           filter: 'blur(50px)',
@@ -827,6 +829,7 @@ export const ParticleOrb: React.FC<ParticleOrbProps> = ({
         style={{
           width: '100%',
           height: '100%',
+          aspectRatio: '1 / 1',
           maxWidth: `${size}px`,
           maxHeight: `${size}px`,
           display: 'block',

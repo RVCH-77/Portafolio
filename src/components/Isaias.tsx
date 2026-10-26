@@ -217,7 +217,7 @@ export const Isaias = () => {
       <p
         style={{
           fontFamily: "'Plus Jakarta Sans', sans-serif",
-          fontSize: 'clamp(18px, 1.8vw, 24px)',
+          fontSize: 'clamp(15px, 3.8vw, 24px)',
           fontWeight: 600,
           lineHeight: 1.6,
           letterSpacing: '-0.02em',
