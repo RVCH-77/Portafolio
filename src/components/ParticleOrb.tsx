@@ -240,22 +240,28 @@ export const ParticleOrb: React.FC<ParticleOrbProps> = ({
         vec4 clipPos = u_mvp * vec4(pos, 1.0);
         gl_Position = clipPos;
 
-        // Tamaño atenuado por perspectiva
+        // Tamaño atenuado por perspectiva (compensado para la nueva distancia de cámara)
         float distZ = max(0.2, clipPos.w);
-        float pSize = (a_size * u_particleSize * 660.0) / distZ;
+        float pSize = (a_size * u_particleSize * 790.0) / distZ;
         gl_PointSize = clamp(pSize, 1.8, 48.0);
 
         // Alpha y color
         vec4 col = a_color;
         col.a *= ease;
 
-        // Efecto Rim Light en el borde superior de la esfera (cúpula brillante celestial de la imagen 3)
+        // Efecto Rim Light en el borde superior de la esfera (cúpula brillante celestial)
         if (a_type < 0.5) {
-          float rim = pow(clamp(length(pos.xy) / 1.15, 0.0, 1.0), 2.2);
+          float rim = pow(clamp(length(pos.xy) / 1.05, 0.0, 1.0), 2.2);
           // Realzar borde blanco-cian
           col.rgb += vec3(0.35, 0.5, 0.75) * rim;
           col.a = mix(col.a, 1.0, rim * 0.6);
         }
+
+        // Suavizado esférico en bordes para garantizar que NUNCA exista un corte plano o cuadrado
+        vec2 ndc = clipPos.xy / clipPos.w;
+        float screenDist = length(ndc);
+        float edgeFade = smoothstep(1.0, 0.80, screenDist);
+        col.a *= edgeFade;
 
         v_color = col;
       }
@@ -349,9 +355,9 @@ export const ParticleOrb: React.FC<ParticleOrbProps> = ({
       const types: number[] = [];
       const scatters: number[] = [];
 
-      // 1. ESFERA EXTERIOR DEL ORBE (Con halo y cúpula brillante superior como en la referencia)
+      // 1. ESFERA EXTERIOR DEL ORBE (Con halo y cúpula brillante superior sin cortes planos)
       const sphereCount = 4400;
-      const sphereRadius = 1.15;
+      const sphereRadius = 1.05;
 
       for (let i = 0; i < sphereCount; i++) {
         const y = 1 - (i / (sphereCount - 1)) * 2;
@@ -570,7 +576,7 @@ export const ParticleOrb: React.FC<ParticleOrbProps> = ({
     viewMatrix[5] = 1;
     viewMatrix[10] = 1;
     viewMatrix[15] = 1;
-    viewMatrix[14] = -3.1;
+    viewMatrix[14] = -3.75;
 
     // --- BUCLE DE FÍSICAS Y RENDER ---
     const render = () => {

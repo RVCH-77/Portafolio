@@ -32,7 +32,7 @@ export const Isaias = () => {
       cancelAnimationFrame(animFrameRef.current);
     }
 
-    // Configuración de onda para el versículo (~0.9s de animación fluida)
+    // Configuración de onda fluida (~0.9s)
     const verseQueue = VERSE_TEXT.split('').map((char, i) => {
       if (char === ' ') {
         return { char: ' ', start: 0, end: 0, isSpace: true };
@@ -42,7 +42,6 @@ export const Isaias = () => {
       return { char, start, end: start + duration, isSpace: false };
     });
 
-    // Configuración para el badge del título
     const badgeQueue = BADGE_TEXT.split('').map((char, i) => {
       if (char === ' ') {
         return { char: ' ', start: 0, end: 0, isSpace: true };
@@ -106,7 +105,7 @@ export const Isaias = () => {
     animFrameRef.current = requestAnimationFrame(tick);
   }, []);
 
-  // Activación al hacer scroll hacia abajo
+  // Activación únicamente al hacer scroll hacia abajo
   useEffect(() => {
     if (isInView) {
       triggerScramble();
@@ -133,16 +132,16 @@ export const Isaias = () => {
         maxWidth: '1280px',
         padding: '0 12px',
         boxSizing: 'border-box',
-        margin: '32px 0 48px',
+        margin: '36px 0 56px',
         zIndex: 2,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        gap: '14px',
+        gap: '16px',
         background: 'transparent',
       }}
     >
-      {/* Encabezado con Badge y botón de Replay opcional sin fondo de tarjeta */}
+      {/* Encabezado 100% orgánico sin cajas, bordes ni marcos rectangulares */}
       <div
         style={{
           display: 'inline-flex',
@@ -154,21 +153,28 @@ export const Isaias = () => {
           userSelect: 'none',
         }}
       >
-        <span
-          style={{
-            color: '#38bdf8',
-            fontWeight: 600,
-            backgroundColor: 'rgba(56, 189, 248, 0.08)',
-            padding: '3px 10px',
-            borderRadius: '6px',
-            border: '1px solid rgba(56, 189, 248, 0.2)',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-          }}
-        >
-          {badgeDisplay}
-        </span>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+          <span style={{ color: '#38bdf8' }}>~</span>
+          <span
+            style={{
+              color: '#38bdf8',
+              fontWeight: 600,
+              letterSpacing: '0.06em',
+            }}
+          >
+            {badgeDisplay}
+          </span>
+          <span
+            style={{
+              width: '5px',
+              height: '5px',
+              borderRadius: '50%',
+              backgroundColor: '#2563eb',
+              boxShadow: '0 0 8px #38bdf8',
+              display: 'inline-block',
+            }}
+          />
+        </div>
 
         <button
           onClick={() => triggerScramble()}
@@ -178,26 +184,21 @@ export const Isaias = () => {
             alignItems: 'center',
             gap: '6px',
             backgroundColor: 'transparent',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            borderRadius: '6px',
-            padding: '3px 9px',
-            color: isScrambling ? '#38bdf8' : '#64748b',
+            border: 'none',
+            outline: 'none',
+            boxShadow: 'none',
+            padding: '2px 6px',
+            color: isScrambling ? '#38bdf8' : '#475569',
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: '11px',
             cursor: isScrambling ? 'default' : 'pointer',
-            transition: 'all 0.2s ease',
+            transition: 'color 0.25s ease',
           }}
           onMouseEnter={(e) => {
-            if (!isScrambling) {
-              e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.3)';
-              e.currentTarget.style.color = '#94a3b8';
-            }
+            if (!isScrambling) e.currentTarget.style.color = '#94a3b8';
           }}
           onMouseLeave={(e) => {
-            if (!isScrambling) {
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-              e.currentTarget.style.color = '#64748b';
-            }
+            if (!isScrambling) e.currentTarget.style.color = '#475569';
           }}
           title="Volver a decodificar el texto"
         >
@@ -212,7 +213,7 @@ export const Isaias = () => {
         </button>
       </div>
 
-      {/* Versículo con Text Scrambling directamente sobre el fondo negro */}
+      {/* Versículo orgánico flotando libremente sobre el fondo negro */}
       <p
         style={{
           fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -222,7 +223,7 @@ export const Isaias = () => {
           letterSpacing: '-0.02em',
           color: '#f8fafc',
           margin: 0,
-          maxWidth: '1100px',
+          maxWidth: '1050px',
         }}
       >
         {verseChars.slice(0, highlightStart).join('')}
