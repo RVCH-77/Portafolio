@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Title } from './components/Title';
 import { ParticleOrb } from './components/ParticleOrb';
 import { motion } from 'motion/react';
