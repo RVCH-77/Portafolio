@@ -1,4 +1,5 @@
 import { AppRoute } from './routes/AppRoute';
+import { PixelSlime } from './components/PixelSlime';
 
 export function App() {
   return (
@@ -21,6 +22,9 @@ export function App() {
       }}
     >
       <AppRoute />
+
+      {/* Compañero Slime Pixel Art 2D */}
+      <PixelSlime />
     </main>
   );
 }

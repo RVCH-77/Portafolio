@@ -4,6 +4,7 @@ import { Title } from '../components/Title';
 import { ParticleOrb } from '../components/ParticleOrb';
 import { Buttons } from '../components/Buttons';
 import { SobreMi } from '../components/SobreMi';
+import { Proyectos } from '../components/Proyectos';
 import { Isaias } from '../components/Isaias';
 
 // Componente para el prompt de terminal con efecto de escritura y cursor parpadeante
@@ -155,6 +156,9 @@ export const HomePage = () => {
 
       {/* Sección Sobre Mí con Typewriter: Change Content */}
       <SobreMi />
+
+      {/* Sección de Proyectos Destacados */}
+      <Proyectos />
 
       {/* Cita de Isaías */}
       <Isaias />
