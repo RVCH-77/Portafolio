@@ -163,17 +163,7 @@ export const Isaias = () => {
             }}
           >
             {badgeDisplay}
-          </span>
-          <span
-            style={{
-              width: '5px',
-              height: '5px',
-              borderRadius: '50%',
-              backgroundColor: '#2563eb',
-              boxShadow: '0 0 8px #38bdf8',
-              display: 'inline-block',
-            }}
-          />
+            </span>           
         </div>
 
         <button
