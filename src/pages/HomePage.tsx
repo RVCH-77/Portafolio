@@ -6,23 +6,29 @@ import { Buttons } from '../components/Buttons';
 import { SobreMi } from '../components/SobreMi';
 import { Proyectos } from '../components/Proyectos';
 import { Isaias } from '../components/Isaias';
+import { Contacto } from '../components/Contacto';
+import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 // Componente para el prompt de terminal con efecto de escritura y cursor parpadeante
 const TerminalPrompt = () => {
-  const fullText = ' C:/Users/rv.rivera> ¿Quien eres?';
+  const { colors } = useTheme();
+  const { t, language } = useLanguage();
+  const fullText = t.hero.terminalPrompt;
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
     let index = 0;
+    setDisplayedText('');
     const interval = setInterval(() => {
       index++;
       setDisplayedText(fullText.slice(0, index));
       if (index >= fullText.length) {
         clearInterval(interval);
       }
-    }, 45);
+    }, 40);
     return () => clearInterval(interval);
-  }, []);
+  }, [fullText, language]);
 
   return (
     <motion.div
@@ -35,15 +41,15 @@ const TerminalPrompt = () => {
         gap: '6px',
         fontFamily: "'JetBrains Mono', monospace",
         fontSize: 'clamp(12px, 3vw, 14px)',
-        color: '#64748b',
+        color: colors.textMuted,
         letterSpacing: '0.04em',
         marginBottom: '6px',
         userSelect: 'none',
         flexWrap: 'wrap',
       }}
     >
-      <span style={{ color: '#38bdf8' }}>~</span>
-      <span style={{ color: '#94a3b8' }}>{displayedText.slice(1)}</span>
+      <span style={{ color: colors.accent }}>~</span>
+      <span style={{ color: colors.textSecondary }}>{displayedText.slice(1)}</span>
       <motion.span
         animate={{ opacity: [1, 0, 1] }}
         transition={{ repeat: Infinity, duration: 0.8 }}
@@ -51,7 +57,7 @@ const TerminalPrompt = () => {
           display: 'inline-block',
           width: '7px',
           height: '15px',
-          backgroundColor: '#38bdf8',
+          backgroundColor: colors.accent,
           marginLeft: '2px',
           borderRadius: '1px',
         }}
@@ -61,6 +67,9 @@ const TerminalPrompt = () => {
 };
 
 export const HomePage = () => {
+  const { colors } = useTheme();
+  const { t } = useLanguage();
+
   return (
     <>
       {/* Hero Section Responsive */}
@@ -106,13 +115,14 @@ export const HomePage = () => {
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontSize: 'clamp(18px, 2.4vw, 28px)',
               fontWeight: 700,
-              color: '#f8fafc',
+              color: colors.textPrimary,
               margin: 0,
               letterSpacing: '-0.02em',
               lineHeight: 1.3,
+              transition: 'color 0.3s ease',
             }}
           >
-            Desarrollador Back-end & Full-Stack
+            {t.hero.role}
           </motion.h2>
 
           {/* Descripción */}
@@ -124,13 +134,13 @@ export const HomePage = () => {
               fontFamily: "'Inter', sans-serif",
               fontSize: 'clamp(14px, 1.2vw, 17px)',
               lineHeight: 1.65,
-              color: '#94a3b8',
+              color: colors.textSecondary,
               maxWidth: '540px',
               margin: 0,
+              transition: 'color 0.3s ease',
             }}
           >
-            Transformo ideas en realidades: Interpreto necesidades y construyo soluciones.
-            Mediante APIs, Arquitecturas limpias, patrones de diseño, optimización de bases de datos y aprendiendo continuamente.
+            {t.hero.description}
           </motion.p>
 
           {/* Componente de Botones de Acción */}
@@ -162,9 +172,11 @@ export const HomePage = () => {
 
       {/* Cita de Isaías */}
       <Isaias />
+
+      {/* Sección de Contacto */}
+      <Contacto />
     </>
   );
 };
 
 export default HomePage;
-
