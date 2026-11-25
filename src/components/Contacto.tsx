@@ -22,42 +22,53 @@ export const Contacto = () => {
       highlight: '新项目实践',
       suffix: '共创卓越架构。',
     },
+    ja: {
+      prefix: '新しいプロジェクトを',
+      highlight: '共に創り出しましょう',
+      suffix: '。',
+    },
   };
 
   const subheadings: Record<string, string> = {
     es: 'Desarrollador Backend & Full-Stack · APIs escalables, arquitecturas limpias y consultoría.',
     en: 'Backend & Full-Stack Developer · Scalable APIs, Clean Architecture & software consulting.',
     zh: '后端与全栈开发工程师 · 高可用 API、整洁架构设计与企业级技术方案。',
+    ja: 'バックエンド ＆ フルスタックエンジニア · スケーラブルなAPI設計、クリーンアーキテクチャ、技術コンサルティング。',
   };
 
   const ctaEmailLabels: Record<string, string> = {
     es: 'Escribir correo',
     en: 'Send an Email',
     zh: '发送邮件',
+    ja: 'メールを送信',
   };
 
   const copyEmailLabels: Record<string, string> = {
     es: 'Copiar correo',
     en: 'Copy Email',
     zh: '复制邮箱',
+    ja: 'アドレスをコピー',
   };
 
   const copiedLabels: Record<string, string> = {
     es: '¡Copiado!',
     en: 'Copied!',
     zh: '已复制！',
+    ja: 'コピー完了！',
   };
 
   const taglines: Record<string, string> = {
     es: 'Transformo ideas en realidades: interpreto necesidades y construyo soluciones.',
     en: 'Turning ideas into reality: interpreting business needs and building scalable solutions.',
     zh: '将想法转化为现实：深度理解业务需求并构建高可用架构。',
+    ja: 'アイデアを形に：ビジネスニーズを深く理解し、高可用性アーキテクチャを構築します。',
   };
 
   const copyrightTexts: Record<string, string> = {
     es: '© 2026 Christopher Rivera (rv.rivera). Todos los derechos reservados.',
     en: '© 2026 Christopher Rivera (rv.rivera). All rights reserved.',
     zh: '© 2026 Christopher Rivera (rv.rivera). 保留所有权利。',
+    ja: '© 2026 Christopher Rivera (rv.rivera). All rights reserved.',
   };
 
   const columnsByLang = {
@@ -142,6 +153,34 @@ export const Contacto = () => {
           { label: 'christoferriveravalderrama@gmail.com', href: 'mailto:christoferriveravalderrama@gmail.com' },
           { label: '墨西哥 · 瓜纳华托', href: '#' },
           { label: 'UTL 软件工程专业', href: '#' },
+        ],
+      },
+    ],
+    ja: [
+      {
+        title: '代表プロジェクト',
+        links: [
+          { label: 'SPB 物流運行管理基盤', href: '#proyectos' },
+          { label: 'Cooltura & Turismo 文化観光', href: 'https://coolturaytourismo.com/', external: true },
+          { label: 'Grupo Interactiva 企業サイト', href: 'https://www.grupointeractiva.mx/', external: true },
+          { label: '図書館連携システム (CQRS/DDD)', href: 'https://github.com/RVCH-77/Biblioteca', external: true },
+          { label: 'Ecosystem IoT環境データ分析', href: 'https://github.com/IDGS-904-23001532/ECOSYSTEM-BACK', external: true },
+        ],
+      },
+      {
+        title: 'GitHub プロフィール',
+        links: [
+          { label: '@RVCH-77 (個人開発)', href: 'https://github.com/RVCH-77', external: true },
+          { label: '@IDGS-904 (学術研究)', href: 'https://github.com/IDGS-904-23001532', external: true },
+          { label: '公開リポジトリ一覧', href: 'https://github.com/RVCH-77?tab=repositories', external: true },
+        ],
+      },
+      {
+        title: '連絡先 ＆ 所在地',
+        links: [
+          { label: 'christoferriveravalderrama@gmail.com', href: 'mailto:christoferriveravalderrama@gmail.com' },
+          { label: 'メキシコ · グアナフアト', href: '#' },
+          { label: 'UTL ソフトウェア工学専攻', href: '#' },
         ],
       },
     ],

@@ -67,6 +67,7 @@ export const HeaderNav = () => {
     { code: 'es', label: 'Español', flag: 'ES' },
     { code: 'en', label: 'English', flag: 'EN' },
     { code: 'zh', label: '中文 (简体)', flag: 'ZH' },
+    { code: 'ja', label: '日本語', flag: 'JA' },
   ];
 
   return (

@@ -19,6 +19,7 @@ export const Isaias = () => {
     es: { idle: 'Replay', active: 'Decodificando...', title: 'Volver a decodificar el texto' },
     en: { idle: 'Replay', active: 'Decoding...', title: 'Re-decode verse' },
     zh: { idle: '重新播放', active: '解码中...', title: '重新解码文本' },
+    ja: { idle: 'Replay', active: 'デコード中...', title: 'テキストを再デコード' },
   };
   const currentReplay = replayLabels[language] || replayLabels.es;
 

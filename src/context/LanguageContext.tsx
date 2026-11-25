@@ -12,12 +12,13 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem('portfolio-lang');
-    if (saved === 'es' || saved === 'en' || saved === 'zh') {
+    if (saved === 'es' || saved === 'en' || saved === 'zh' || saved === 'ja') {
       return saved as Language;
     }
     // Detección por navegador
     if (typeof navigator !== 'undefined') {
       const browserLang = navigator.language.toLowerCase();
+      if (browserLang.startsWith('ja')) return 'ja';
       if (browserLang.startsWith('zh')) return 'zh';
       if (browserLang.startsWith('en')) return 'en';
     }

@@ -1,4 +1,4 @@
-export type Language = 'es' | 'en' | 'zh';
+export type Language = 'es' | 'en' | 'zh' | 'ja';
 
 export interface ProjectTranslation {
   id: string;
@@ -392,6 +392,116 @@ export const TRANSLATIONS: Record<Language, Translations> = {
         '扎实的后端体系，整洁的架构之美。',
         '你查看过 C# 和 PHP 的项目工程了吗？',
         '祝你在浏览代码时收获满满！',
+      ],
+    },
+  },
+
+  ja: {
+    nav: {
+      inicio: 'ホーム',
+      sobreMi: '自己紹介',
+      proyectos: 'プロジェクト',
+      contacto: 'お問い合わせ',
+      githubLabel: '// GitHub',
+      githubPersonal: '個人アカウント',
+      githubAcademic: 'UTL 学術アカウント',
+      themeLight: 'ライトモード',
+      themeDark: 'ダークモード',
+      language: '言語',
+    },
+    hero: {
+      terminalPrompt: ' C:/Users/rv.rivera> whoami (プロフィール)',
+      role: 'バックエンド ＆ フルスタックエンジニア',
+      description:
+        'アイデアを現実に：RESTful API、クリーンアーキテクチャ、デザインパターン、データベース最適化を駆使し、ビジネス要件を深く理解した高可用性ソフトウェアを構築します。',
+      btnContact: 'お問い合わせ',
+      btnProjects: '実績一覧を見る',
+    },
+    sobreMi: {
+      titles: ['自己紹介', '私について', 'プロフィール', '経歴・スキル'],
+      paragraphs: [
+        'バックエンド開発に特化したソフトウェアエンジニアです。高パフォーマンスなAPI実装、拡張性の高いシステムアーキテクチャ設計、データベース管理を得意としています。',
+        '現在はソフトウェアコンサルティング会社に所属し、技術開発にとどまらずビジネスの真の課題を汲み取ったソリューションを提供しています。レガシーシステムのモダン移行、スケーラブルな基盤構築、DevOps手法を取り入れたテスト自動化の経験があります。並行して、ソフトウェアマネジメント・開発工学の学位取得に向けて学業にも励んでいます。',
+      ],
+    },
+    proyectos: {
+      sectionBadge: '// 02. 主な開発実績',
+      sectionTitle: '代表プロジェクト',
+      sectionSubtitle:
+        'クリーンアーキテクチャ、疎結合なAPI、モダンな技術スタックを採用し、企業の重要課題を解決する堅牢なシステムを設計・開発しています。',
+      btnRepo: 'リポジトリ',
+      btnSite: 'Webサイト',
+      badgePrivate: '非公開',
+      badgeLive: '稼働中',
+      badgeCode: 'ソース公開',
+      items: [
+        {
+          id: 'spb-logistica',
+          title: 'SPB · 総合物流＆運行管理クラウドプラットフォーム',
+          badgeLabel: '非公開',
+          description:
+            'クリーンアーキテクチャに基づき、運送・物流業務および管理オペレーションを一元化するエンタープライズ基盤。ドライバー運行監視、走行距離テレメトリ、配送ルート最適化、給与計算、RBACアクセス権限管理などのモジュラーサービスを設計・実装。自動データベースマイグレーションの導入や高負荷時における位置情報クエリの最適化を実施。',
+          tags: ['PHP 8', 'MySQL', 'JavaScript', 'REST APIs', '物流システム', 'モジュラー設計', 'Clean Architecture'],
+        },
+        {
+          id: 'cooltura-turismo',
+          title: 'Cooltura & Turismo · 文化・観光ポータル',
+          badgeLabel: '稼働中',
+          description:
+            '文化イベントや観光情報の配信・管理を行うポータルサイト（独自CMS搭載）。Google AdSenseによる広告収益化、テクニカルSEO戦略、Core Web VitalsおよびSQLクエリの最適化により高速なページレスポンスを実現。',
+          tags: ['PHP', 'MySQL', 'Google AdSense', 'SEO', 'Core Web Vitals'],
+        },
+        {
+          id: 'grupo-interactiva',
+          title: 'Grupo Interactiva · 企業コーポレートサイト基盤',
+          badgeLabel: '稼働中',
+          description:
+            'Grupo Interactiva社の企業Webプラットフォーム開発・技術デリバリーを統括。行政機関・エンタープライズ顧客向けに要件定義、情報設計、デプロイを指揮し、生成AIショーケースや動的データビジュアルを構築。',
+          tags: ['プロジェクトマネジメント', 'アジャイル開発', 'JavaScript', 'HTML5 / CSS3', 'Webアーキテクチャ'],
+        },
+        {
+          id: 'biblioteca-cqrs-ddd',
+          title: '大学図書館相互接続システム · CQRS & DDD',
+          badgeLabel: 'ソース公開',
+          description:
+            '高度なソフトウェア工学標準に基づき設計された大学図書館連携プラットフォーム。コア部にはコマンド・クエリ責務分離（CQRS）を採用し、ドメイン駆動設計（DDD）の境界づけられたコンテキストにより他大学ノードとの連携を実現。MVC基盤上にDAOパターンおよびMVVM状態管理を統合。',
+          tags: ['JavaScript', 'Node.js', 'CQRS', 'DDD', 'MVC / DAO', 'システムアーキテクチャ'],
+        },
+        {
+          id: 'ecosystem-fullstack',
+          title: 'Ecosystem · IoTテレメトリ ＆ 環境データ分析',
+          badgeLabel: 'ソース公開',
+          description:
+            '環境モニタリングおよびアルゴリズム分析のためのマルチプラットフォームシステム。疎結合アーキテクチャを採用し、.NET Core / C#（Entity Framework）によるバックエンドWeb API、Python Jupyterによるデータ処理、KotlinによるAndroidネイティブアプリを連携。',
+          tags: ['.NET Core', 'C#', 'Kotlin / Android', 'Python', 'Jupyter', 'REST APIs'],
+        },
+      ],
+    },
+    isaias: {
+      verseText:
+        '«若者も倦み、疲れ、若い男もつまずき倒れる。しかし、主を待ち望む者は新しく力を得、鷲のように翼をかって上ることができる。走っても倦むことなく、歩いても疲れることはない。»',
+      highlightPhrase: '新しく力を得',
+      badgeText: 'イザヤ書 40:31',
+    },
+    contacto: {
+      title: '共に新しいプロジェクトを創り出しましょう',
+      subtitle:
+        '受託開発のご相談、お仕事のオファー、アーキテクチャやバックエンド技術に関するディスカッションなど、いつでもお気軽にご連絡ください。',
+      btnCopy: 'アドレスをコピー',
+      copiedToast: 'コピー完了！',
+      btnWrite: 'メール作成',
+      footerText: '© 2026 · React、Vite、Motionで構築',
+      statusBadge: 'コンタクト受付中 · 新規プロジェクト対応可',
+      responseEstimate: '返答目安時間：24時間以内',
+      directChannel: 'ダイレクト通信チャンネル',
+    },
+    pixelSlime: {
+      greeting: 'こんにちは！案内役のスライムです。',
+      clicks: [
+        'ポヨン！🟢',
+        '堅牢なバックエンドと美しいアーキテクチャ！',
+        'C# や PHP のプロジェクトはもう見ましたか？',
+        'コードの探索を楽しんでいってくださいね！',
       ],
     },
   },
