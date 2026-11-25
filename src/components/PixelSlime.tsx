@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-
-const MESSAGES = [
-  '¡Boing! ',
-  '¡Hola! Soy Slimey ^_^',
-  '*squish*',
-  '¿Viste los proyectos?',
-  '¡Bloop!',
-];
+import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
 
 export const PixelSlime = () => {
+  const { t } = useLanguage();
+  const { colors } = useTheme();
+
   const [isBlinking, setIsBlinking] = useState(false);
   const [bubbleText, setBubbleText] = useState<string | null>(null);
   const [messageIndex, setMessageIndex] = useState(0);
+
+  const messages = t.pixelSlime.clicks;
 
   // Parpadeo aleatorio de ojos
   useEffect(() => {
@@ -25,8 +24,8 @@ export const PixelSlime = () => {
   }, []);
 
   const handleClick = () => {
-    setBubbleText(MESSAGES[messageIndex]);
-    setMessageIndex((prev) => (prev + 1) % MESSAGES.length);
+    setBubbleText(messages[messageIndex % messages.length]);
+    setMessageIndex((prev) => (prev + 1) % messages.length);
 
     setTimeout(() => {
       setBubbleText(null);
@@ -59,16 +58,16 @@ export const PixelSlime = () => {
             style={{
               position: 'absolute',
               bottom: '68px',
-              backgroundColor: 'rgba(8, 14, 30, 0.95)',
-              border: '2px solid #38bdf8',
+              backgroundColor: colors.bgCard,
+              border: `2px solid ${colors.accent}`,
               borderRadius: '8px',
               padding: '6px 12px',
-              color: '#f8fafc',
+              color: colors.textPrimary,
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: '11px',
               fontWeight: 600,
               whiteSpace: 'nowrap',
-              boxShadow: '0 0 16px rgba(56, 189, 248, 0.4), 0 8px 24px rgba(0, 0, 0, 0.8)',
+              boxShadow: '0 0 16px rgba(56, 189, 248, 0.3), 0 8px 24px rgba(0, 0, 0, 0.4)',
               pointerEvents: 'none',
             }}
           >
@@ -84,7 +83,7 @@ export const PixelSlime = () => {
                 height: 0,
                 borderLeft: '5px solid transparent',
                 borderRight: '5px solid transparent',
-                borderTop: '6px solid #38bdf8',
+                borderTop: `6px solid ${colors.accent}`,
               }}
             />
           </motion.div>
@@ -115,98 +114,67 @@ export const PixelSlime = () => {
           justifyContent: 'center',
           filter: 'drop-shadow(0 0 12px rgba(56, 189, 248, 0.45))',
         }}
-        title="¡Haz clic en el slime!"
+        title="Pixel Slime"
       >
         {/* Gráfico Pixel Art 2D dibujado vectorialmente con cuadrícula de píxeles */}
         <svg
+          width="48"
+          height="42"
           viewBox="0 0 16 14"
-          width="100%"
-          height="100%"
-          style={{ imageRendering: 'pixelated' }}
+          style={{ imageRendering: 'pixelated', shapeRendering: 'crispEdges' }}
         >
-          {/* Sombra / Borde exterior oscuro */}
-          <path
-            fill="#0369a1"
-            d="
-              M 5 0 H 11 V 1 H 13 V 2 H 14 V 4 H 15 V 10 H 14 V 12 H 13 V 13 H 11 V 14 H 5 V 13 H 3 V 12 H 2 V 10 H 1 V 4 H 2 V 2 H 3 V 1 H 5 Z
-            "
-          />
+          {/* Sombra base / Borde inferior */}
+          <rect x="4" y="13" width="8" height="1" fill="#047857" />
+          <rect x="2" y="12" width="12" height="1" fill="#047857" />
 
-          {/* Cuerpo principal del Slime (Cian brillante) */}
-          <path
-            fill="#38bdf8"
-            d="
-              M 5 1 H 11 V 2 H 13 V 4 H 14 V 10 H 13 V 12 H 11 V 13 H 5 V 12 H 3 V 10 H 2 V 4 H 3 V 2 H 5 Z
-            "
-          />
+          {/* Cuerpo principal del Slime (Capa verde esmeralda / cian) */}
+          <rect x="2" y="7" width="12" height="5" fill="#10b981" />
+          <rect x="1" y="8" width="14" height="4" fill="#10b981" />
+          <rect x="3" y="5" width="10" height="2" fill="#10b981" />
+          <rect x="4" y="4" width="8" height="1" fill="#10b981" />
+          <rect x="5" y="3" width="6" height="1" fill="#10b981" />
+          <rect x="6" y="2" width="4" height="1" fill="#10b981" />
 
-          {/* Sombra inferior del cuerpo (Profundidad) */}
-          <path
-            fill="#0284c7"
-            d="
-              M 3 9 H 13 V 10 H 14 V 11 H 13 V 12 H 11 V 13 H 5 V 12 H 3 V 11 H 2 V 10 H 3 Z
-            "
-          />
+          {/* Sombreado interno oscuro (Sensación 3D pixelada) */}
+          <rect x="2" y="11" width="12" height="1" fill="#059669" />
+          <rect x="1" y="10" width="2" height="2" fill="#059669" />
+          <rect x="13" y="10" width="2" height="2" fill="#059669" />
 
-          {/* Brillo especular superior / Glint (Luz pixel art) */}
-          <rect x="4" y="2" width="2" height="1" fill="#f0f9ff" />
-          <rect x="3" y="3" width="1" height="2" fill="#f0f9ff" />
-          <rect x="4" y="3" width="2" height="1" fill="#bae6fd" />
-          <rect x="10" y="2" width="2" height="1" fill="#bae6fd" opacity="0.7" />
+          {/* Brillo especular superior izquierdo (Highlight brillante) */}
+          <rect x="4" y="4" width="2" height="2" fill="#6ee7b7" />
+          <rect x="6" y="3" width="2" height="1" fill="#a7f3d0" />
+          <rect x="3" y="6" width="1" height="2" fill="#a7f3d0" />
 
-          {/* Ojos y pestañas */}
+          {/* Ojos pixelados con estado de parpadeo */}
           {isBlinking ? (
-            // Ojos cerrados / Parpadeo
+            /* Ojos cerrados (línea de descanso) */
             <>
-              <rect x="5" y="7" width="2" height="1" fill="#0c1829" />
-              <rect x="9" y="7" width="2" height="1" fill="#0c1829" />
+              <rect x="4" y="8" width="2" height="1" fill="#064e3b" />
+              <rect x="10" y="8" width="2" height="1" fill="#064e3b" />
             </>
           ) : (
-            // Ojos abiertos tiernos con brillo blanco
+            /* Ojos abiertos con pupila y brillo */
             <>
               {/* Ojo izquierdo */}
-              <rect x="5" y="6" width="2" height="3" fill="#0c1829" />
-              <rect x="5" y="6" width="1" height="1" fill="#ffffff" />
+              <rect x="4" y="7" width="2" height="3" fill="#064e3b" />
+              <rect x="4" y="7" width="1" height="1" fill="#ffffff" />
 
               {/* Ojo derecho */}
-              <rect x="9" y="6" width="2" height="3" fill="#0c1829" />
-              <rect x="9" y="6" width="1" height="1" fill="#ffffff" />
+              <rect x="10" y="7" width="2" height="3" fill="#064e3b" />
+              <rect x="10" y="7" width="1" height="1" fill="#ffffff" />
             </>
           )}
 
-          {/* Sonrisa sutil */}
-          <rect x="7" y="8" width="2" height="1" fill="#0369a1" />
+          {/* Mejillas sonrojadas pixeladas (Cute blush) */}
+          <rect x="2" y="9" width="2" height="1" fill="#34d399" opacity="0.8" />
+          <rect x="12" y="9" width="2" height="1" fill="#34d399" opacity="0.8" />
 
-          {/* Mejillas sonrojadas (Blush) */}
-          <rect x="3" y="8" width="1" height="1" fill="#f472b6" opacity="0.75" />
-          <rect x="12" y="8" width="1" height="1" fill="#f472b6" opacity="0.75" />
+          {/* Pequeña sonrisa pixelada */}
+          <rect x="7" y="9" width="2" height="1" fill="#064e3b" />
         </svg>
       </motion.div>
-
-      {/* Sombra proyectada en el suelo con expansión inversa */}
-      <motion.div
-        animate={{
-          scaleX: [1, 0.75, 1.35, 0.9, 1],
-          opacity: [0.4, 0.2, 0.65, 0.35, 0.4],
-        }}
-        transition={{
-          duration: 2.2,
-          repeat: Infinity,
-          ease: 'easeInOut',
-          times: [0, 0.35, 0.65, 0.85, 1],
-        }}
-        style={{
-          width: '42px',
-          height: '8px',
-          borderRadius: '50%',
-          backgroundColor: '#000000',
-          filter: 'blur(3px)',
-          marginTop: '-4px',
-        }}
-      />
     </aside>
   );
 };
 
 export default PixelSlime;
-

@@ -1,14 +1,18 @@
+import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { AppRoute } from './routes/AppRoute';
 import { PixelSlime } from './components/PixelSlime';
 
-export function App() {
+function AppLayout() {
+  const { colors } = useTheme();
+
   return (
     <main
       style={{
         width: '100%',
         minHeight: '100vh',
-        backgroundColor: '#070709',
-        backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px)',
+        backgroundColor: colors.bg,
+        backgroundImage: `radial-gradient(${colors.bgPattern} 1px, transparent 1px)`,
         backgroundSize: '24px 24px',
         overflowX: 'hidden',
         overflowY: 'auto',
@@ -19,6 +23,7 @@ export function App() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        transition: 'background-color 0.3s ease, color 0.3s ease',
       }}
     >
       <AppRoute />
@@ -26,6 +31,16 @@ export function App() {
       {/* Compañero Slime Pixel Art 2D */}
       <PixelSlime />
     </main>
+  );
+}
+
+export function App() {
+  return (
+    <ThemeProvider>
+      <LanguageProvider>
+        <AppLayout />
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 

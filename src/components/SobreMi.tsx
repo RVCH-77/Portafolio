@@ -1,34 +1,32 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "motion/react";
 import { Typewriter } from "./Typewriter";
-
-// Títulos que rotan con la animación Typewriter: Change Content
-const TITLES = [
-  "Sobre mí",
-  "¿Quién soy?",
-  "Mi perfil",
-  "About me",
-];
-
-const CONTEXT_PARAGRAPHS = [
-  "Soy un Desarrollador de Software enfocado en Backend,Me especializo en la implementación de APIs, diseño de arquitecturas y gestión de bases de datos.",
-  "Actualmente trabajo en una consultoría de software donde no solo desarrollo soluciones, sino que entiendo las necesidades del negocio para llegar al resultado esperado. He participado en migraciones tecnológicas, desarrollo de sistemas escalables y establecimiento de pruebas bajo prácticas DevOps. Paralelamente, estudio Ingeniería en Gestión y Desarrollo de Software.",
-];
+import { useTheme } from "../context/ThemeContext";
+import { useLanguage } from "../context/LanguageContext";
 
 export const SobreMi = () => {
   const containerRef = useRef<HTMLElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.25 });
+  const { colors } = useTheme();
+  const { t, language } = useLanguage();
+
+  const titles = t.sobreMi.titles;
+  const paragraphs = t.sobreMi.paragraphs;
 
   const [titleIndex, setTitleIndex] = useState(0);
 
-  // Cambio dinámico de título cada 4.5 segundos (con backspacing inteligente)
+  // Reiniciar o ciclar títulos dinámicos
+  useEffect(() => {
+    setTitleIndex(0);
+  }, [language]);
+
   useEffect(() => {
     const timer = setInterval(() => {
-      setTitleIndex((prev) => (prev + 1) % TITLES.length);
+      setTitleIndex((prev) => (prev + 1) % titles.length);
     }, 4500);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [titles.length]);
 
   return (
     <motion.section
@@ -69,17 +67,19 @@ export const SobreMi = () => {
               fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif",
               fontSize: "clamp(42px, 5.8vw, 76px)",
               fontWeight: 800,
-              color: "#ffffff",
+              color: colors.textPrimary,
               letterSpacing: "-0.035em",
               lineHeight: 1.05,
               margin: 0,
               userSelect: "none",
               display: "inline-flex",
               alignItems: "baseline",
+              transition: "color 0.3s ease",
             }}
           >
             <Typewriter
-              text={TITLES[titleIndex]}
+              key={`${language}-${titleIndex}`}
+              text={titles[titleIndex]}
               typeSpeed={50}
               deleteSpeed={30}
               pauseBeforeType={120}
@@ -88,7 +88,7 @@ export const SobreMi = () => {
           </h2>
         </div>
 
-        {/* Columna Derecha: Tu texto original al lado */}
+        {/* Columna Derecha: Texto al lado */}
         <div
           style={{
             display: "flex",
@@ -97,16 +97,17 @@ export const SobreMi = () => {
             maxWidth: "680px",
           }}
         >
-          {CONTEXT_PARAGRAPHS.map((paragraph, idx) => (
+          {paragraphs.map((paragraph, idx) => (
             <p
               key={idx}
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "clamp(15px, 1.25vw, 17px)",
                 lineHeight: 1.75,
-                color: "#cbd5e1",
+                color: colors.textSecondary,
                 margin: 0,
                 letterSpacing: "-0.01em",
+                transition: "color 0.3s ease",
               }}
             >
               {paragraph}

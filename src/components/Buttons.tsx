@@ -1,7 +1,12 @@
 import { motion } from 'motion/react';
 import { ArrowUpRightIcon, ArrowDownIcon } from '@animateicons/react/lucide';
+import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Buttons = () => {
+  const { colors, isDark } = useTheme();
+  const { t } = useLanguage();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -41,7 +46,7 @@ export const Buttons = () => {
           e.currentTarget.style.transform = 'translateY(0)';
         }}
       >
-        <span>Contáctame</span>
+        <span>{t.hero.btnContact}</span>
         <ArrowUpRightIcon size={16} isAnimated={true} />
       </a>
 
@@ -51,9 +56,9 @@ export const Buttons = () => {
           display: 'inline-flex',
           alignItems: 'center',
           gap: '8px',
-          backgroundColor: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.14)',
-          color: '#e2e8f0',
+          backgroundColor: isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.04)',
+          border: `1px solid ${colors.borderSubtle}`,
+          color: colors.textPrimary,
           padding: '12px 24px',
           borderRadius: '9999px',
           fontSize: '14px',
@@ -64,17 +69,17 @@ export const Buttons = () => {
           transition: 'all 0.25s ease',
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.4)';
-          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+          e.currentTarget.style.borderColor = colors.accent;
+          e.currentTarget.style.backgroundColor = colors.bgCardHover;
           e.currentTarget.style.transform = 'translateY(-2px)';
         }}
         onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.14)';
-          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+          e.currentTarget.style.borderColor = colors.borderSubtle;
+          e.currentTarget.style.backgroundColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.04)';
           e.currentTarget.style.transform = 'translateY(0)';
         }}
       >
-        <span>Ver proyectos</span>
+        <span>{t.hero.btnProjects}</span>
         <ArrowDownIcon size={16} isAnimated={true} />
       </a>
     </motion.div>

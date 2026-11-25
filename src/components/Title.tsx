@@ -1,6 +1,8 @@
 import { motion, type Variants } from "motion/react";
+import { useTheme } from "../context/ThemeContext";
 
 export const Title = () => {
+  const { colors } = useTheme();
   const text = "rv.rivera";
 
   const containerVariants: Variants = {
@@ -42,10 +44,11 @@ export const Title = () => {
         fontWeight: 900,
         letterSpacing: "-0.045em",
         fontFamily: "'Plus Jakarta Sans', 'Outfit', sans-serif",
-        color: "#ffffff",
+        color: colors.textPrimary,
         margin: 0,
         lineHeight: 1,
         userSelect: "none",
+        transition: "color 0.3s ease",
       }}
     >
       {text.split("").map((char, index) => {
@@ -58,8 +61,8 @@ export const Title = () => {
                 display: "inline-block",
                 width: "0.18em",
                 height: "0.18em",
-                borderRadius: "50%", // Círculo 100% geométrico y perfecto
-                backgroundColor: "#2563eb", // Azul Rey
+                borderRadius: "50%",
+                backgroundColor: "#2563eb",
                 margin: "0 0.06em",
                 verticalAlign: "baseline",
                 transform: "translateY(-0.02em)",

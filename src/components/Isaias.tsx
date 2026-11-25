@@ -1,27 +1,36 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useInView } from 'motion/react';
-
-const VERSE_TEXT =
-  '«Los muchachos se fatigan y se cansan, los jóvenes flaquean y caen; pero los que esperan a Dios tendrán nuevas fuerzas; levantarán alas como las águilas; correrán, y no se cansarán; caminarán, y no se fatigarán.»';
-
-const HIGHLIGHT_PHRASE = 'tendrán nuevas fuerzas';
-const BADGE_TEXT = 'Isaías 40:31';
+import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const GLYPHS = '0123456789ABCDEF!<>-_\\/[]{}—=+*^?#~';
 
 export const Isaias = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, amount: 0.25 });
+  const { colors, isDark } = useTheme();
+  const { t, language } = useLanguage();
 
-  const [verseChars, setVerseChars] = useState<string[]>(() => VERSE_TEXT.split(''));
-  const [badgeDisplay, setBadgeDisplay] = useState(BADGE_TEXT);
+  const verseText = t.isaias.verseText;
+  const highlightPhrase = t.isaias.highlightPhrase;
+  const badgeText = t.isaias.badgeText;
+
+  const replayLabels: Record<string, { idle: string; active: string; title: string }> = {
+    es: { idle: 'Replay', active: 'Decodificando...', title: 'Volver a decodificar el texto' },
+    en: { idle: 'Replay', active: 'Decoding...', title: 'Re-decode verse' },
+    zh: { idle: '重新播放', active: '解码中...', title: '重新解码文本' },
+  };
+  const currentReplay = replayLabels[language] || replayLabels.es;
+
+  const [verseChars, setVerseChars] = useState<string[]>(() => verseText.split(''));
+  const [badgeDisplay, setBadgeDisplay] = useState(badgeText);
   const [isScrambling, setIsScrambling] = useState(false);
 
   const isScramblingRef = useRef(false);
   const animFrameRef = useRef<number | null>(null);
 
-  const highlightStart = VERSE_TEXT.indexOf(HIGHLIGHT_PHRASE);
-  const highlightEnd = highlightStart + HIGHLIGHT_PHRASE.length;
+  const highlightStart = verseText.indexOf(highlightPhrase);
+  const highlightEnd = highlightStart >= 0 ? highlightStart + highlightPhrase.length : 0;
 
   const triggerScramble = useCallback(() => {
     if (isScramblingRef.current) return;
@@ -32,21 +41,20 @@ export const Isaias = () => {
       cancelAnimationFrame(animFrameRef.current);
     }
 
-    // Configuración de onda fluida (~0.9s)
-    const verseQueue = VERSE_TEXT.split('').map((char, i) => {
+    const verseQueue = verseText.split('').map((char, i) => {
       if (char === ' ') {
         return { char: ' ', start: 0, end: 0, isSpace: true };
       }
-      const start = Math.floor((i / VERSE_TEXT.length) * 42);
+      const start = Math.floor((i / verseText.length) * 42);
       const duration = Math.floor(Math.random() * 8 + 6);
       return { char, start, end: start + duration, isSpace: false };
     });
 
-    const badgeQueue = BADGE_TEXT.split('').map((char, i) => {
+    const badgeQueue = badgeText.split('').map((char, i) => {
       if (char === ' ') {
         return { char: ' ', start: 0, end: 0, isSpace: true };
       }
-      const start = Math.floor((i / BADGE_TEXT.length) * 14);
+      const start = Math.floor((i / badgeText.length) * 14);
       const duration = Math.floor(Math.random() * 6 + 5);
       return { char, start, end: start + duration, isSpace: false };
     });
@@ -103,9 +111,18 @@ export const Isaias = () => {
     };
 
     animFrameRef.current = requestAnimationFrame(tick);
-  }, []);
+  }, [verseText, badgeText]);
 
-  // Activación únicamente al hacer scroll hacia abajo
+  // Al cambiar idioma, reiniciar y re-ejecutar scramble
+  useEffect(() => {
+    setVerseChars(verseText.split(''));
+    setBadgeDisplay(badgeText);
+    if (isInView) {
+      triggerScramble();
+    }
+  }, [language, verseText, badgeText, isInView, triggerScramble]);
+
+  // Activación al entrar en vista
   useEffect(() => {
     if (isInView) {
       triggerScramble();
@@ -141,7 +158,7 @@ export const Isaias = () => {
         background: 'transparent',
       }}
     >
-      {/* Encabezado 100% orgánico sin cajas, bordes ni marcos rectangulares */}
+      {/* Encabezado sin marcos */}
       <div
         style={{
           display: 'inline-flex',
@@ -154,16 +171,16 @@ export const Isaias = () => {
         }}
       >
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ color: '#38bdf8' }}>~</span>
+          <span style={{ color: colors.accent }}>~</span>
           <span
             style={{
-              color: '#38bdf8',
+              color: colors.accent,
               fontWeight: 600,
               letterSpacing: '0.06em',
             }}
           >
             {badgeDisplay}
-            </span>           
+          </span>
         </div>
 
         <button
@@ -178,19 +195,19 @@ export const Isaias = () => {
             outline: 'none',
             boxShadow: 'none',
             padding: '2px 6px',
-            color: isScrambling ? '#38bdf8' : '#475569',
+            color: isScrambling ? colors.accent : colors.textMuted,
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: '11px',
             cursor: isScrambling ? 'default' : 'pointer',
             transition: 'color 0.25s ease',
           }}
           onMouseEnter={(e) => {
-            if (!isScrambling) e.currentTarget.style.color = '#94a3b8';
+            if (!isScrambling) e.currentTarget.style.color = colors.textSecondary;
           }}
           onMouseLeave={(e) => {
-            if (!isScrambling) e.currentTarget.style.color = '#475569';
+            if (!isScrambling) e.currentTarget.style.color = colors.textMuted;
           }}
-          title="Volver a decodificar el texto"
+          title={currentReplay.title}
         >
           <motion.span
             animate={isScrambling ? { rotate: 360 } : { rotate: 0 }}
@@ -199,11 +216,11 @@ export const Isaias = () => {
           >
             ↻
           </motion.span>
-          <span>{isScrambling ? 'Decodificando...' : 'Replay'}</span>
+          <span>{isScrambling ? currentReplay.active : currentReplay.idle}</span>
         </button>
       </div>
 
-      {/* Versículo orgánico flotando libremente sobre el fondo negro */}
+      {/* Versículo orgánico con texto destacado */}
       <p
         style={{
           fontFamily: "'Plus Jakarta Sans', sans-serif",
@@ -211,22 +228,29 @@ export const Isaias = () => {
           fontWeight: 600,
           lineHeight: 1.6,
           letterSpacing: '-0.02em',
-          color: '#f8fafc',
+          color: colors.textPrimary,
           margin: 0,
           maxWidth: '1050px',
+          transition: 'color 0.3s ease',
         }}
       >
-        {verseChars.slice(0, highlightStart).join('')}
-        <span
-          style={{
-            color: '#38bdf8',
-            fontWeight: 700,
-            textShadow: '0 0 20px rgba(56, 189, 248, 0.35)',
-          }}
-        >
-          {verseChars.slice(highlightStart, highlightEnd).join('')}
-        </span>
-        {verseChars.slice(highlightEnd).join('')}
+        {highlightStart >= 0 ? (
+          <>
+            {verseChars.slice(0, highlightStart).join('')}
+            <span
+              style={{
+                color: colors.accent,
+                fontWeight: 700,
+                textShadow: isDark ? '0 0 20px rgba(56, 189, 248, 0.35)' : 'none',
+              }}
+            >
+              {verseChars.slice(highlightStart, highlightEnd).join('')}
+            </span>
+            {verseChars.slice(highlightEnd).join('')}
+          </>
+        ) : (
+          verseChars.join('')
+        )}
       </p>
     </motion.section>
   );
